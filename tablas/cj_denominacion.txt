@@ -1,0 +1,40 @@
+-- Table: cajero_db.cj_denominacion
+
+-- DROP TABLE cajero_db.cj_denominacion;
+
+CREATE TABLE cajero_db.cj_denominacion
+(
+    id_denominacion numeric(15,0) NOT NULL,
+    denominacion numeric(6,0) NOT NULL,
+    cantidad numeric(20,0) NOT NULL,
+    CONSTRAINT cj_denominacion_pkey PRIMARY KEY (id_denominacion),
+    CONSTRAINT cj_denominacion_uq UNIQUE (denominacion)
+,
+    CONSTRAINT denominacion CHECK (denominacion > 0::numeric) NOT VALID
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE cajero_db.cj_denominacion
+    OWNER to postgres;
+
+-- Index: cj_denominacion_consulta_ind
+
+-- DROP INDEX cajero_db.cj_denominacion_consulta_ind;
+
+CREATE INDEX cj_denominacion_consulta_ind
+    ON cajero_db.cj_denominacion USING btree
+    (denominacion)
+    TABLESPACE pg_default;
+
+-- Trigger: trg_denominacion_id
+
+-- DROP TRIGGER trg_denominacion_id ON cajero_db.cj_denominacion;
+
+CREATE TRIGGER trg_denominacion_id
+    BEFORE INSERT OR UPDATE 
+    ON cajero_db.cj_denominacion
+    FOR EACH ROW
+    EXECUTE PROCEDURE cajero_db.trg_denominacion_id();

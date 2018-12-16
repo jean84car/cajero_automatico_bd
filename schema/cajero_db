@@ -1,0 +1,6 @@
+-- SCHEMA: cajero_db
+
+-- DROP SCHEMA cajero_db ;
+
+CREATE SCHEMA cajero_db
+    AUTHORIZATION postgres;
